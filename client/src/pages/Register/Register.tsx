@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import Input from "../../components/ui/Input/Input";
+
 export default function Register() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -19,8 +21,24 @@ export default function Register() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        console.log(formData);
+        console.log("Registered user:", formData);
+        
+        // Write mock user data to localStorage
+        localStorage.setItem("collabspace_user", JSON.stringify({ email: formData.email }));
+        // Also update the mock user store if needed
+        const mockUser = {
+            id: "u1",
+            name: formData.fullName,
+            email: formData.email,
+            avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
+            role: "Workspace Owner",
+            bio: "Lead Product Engineer building modern collaboration software.",
+            title: "Lead Frontend Architect"
+        };
+        localStorage.setItem("collabspace_user_details", JSON.stringify(mockUser));
+        
+        // Route to workspace onboarding
+        navigate("/onboarding/workspace");
     };
 
     return (

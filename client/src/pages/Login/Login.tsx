@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button/Button";
 import Input from "../../components/ui/Input/Input";
+
 export default function Login() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -17,9 +19,11 @@ export default function Login() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        console.log(formData);
-
+        console.log("Logged in user:", formData);
+        
+        // Write mock user data to localStorage
+        localStorage.setItem("collabspace_user", JSON.stringify({ email: formData.email }));
+        navigate("/dashboard");
     };
 
     return (
@@ -78,7 +82,7 @@ export default function Login() {
                     </div>
 
                     <Button type="submit">
-                        Register
+                        Sign In
                     </Button>
                 </form>
 
