@@ -1,0 +1,38 @@
+export const projects = [
+    {
+        id: 1,
+        name: "CollabSpace",
+        description: "Modern collaboration platform for teams.",
+        progress: 72,
+        members: 6,
+        dueDate: "28 Jul 2026",
+        priority: "High",
+    },
+    {
+        id: 2,
+        name: "Expense Tracker",
+        description: "Personal finance management application.",
+        progress: 45,
+        members: 3,
+        dueDate: "05 Aug 2026",
+        priority: "Medium",
+    },
+    {
+        id: 3,
+        name: "MedInsight AI",
+        description: "AI-powered healthcare analytics platform.",
+        progress: 91,
+        members: 8,
+        dueDate: "15 Aug 2026",
+        priority: "High",
+    },
+    {
+        id: 4,
+        name: "Portfolio Website",
+        description: "Professional portfolio for developers.",
+        progress: 100,
+        members: 1,
+        dueDate: "Completed",
+        priority: "Low",
+    },
+];
