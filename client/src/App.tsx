@@ -14,6 +14,7 @@ import Explore from "./pages/Explore/Explore";
 import Profile from "./pages/Profile/Profile";
 import Settings from "./pages/Settings/Settings";
 import WorkspaceOnboarding from "./pages/WorkspaceOnboarding/WorkspaceOnboarding";
+import ProjectDetails from "./pages/ProjectDetails/ProjectDetails";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/workspaces" element={<Workspaces />} />
         <Route path="/projects" element={<Projects />} />
+
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/profile" element={<Profile />} />
@@ -39,6 +41,11 @@ function App() {
           element={<WorkspaceOnboarding />}
         />
       </Route>
+
+      <Route
+        path="/projects/:projectId"
+        element={<ProjectDetails />}
+      />
     </Routes>
   );
 }

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import {
   Folder,
   Plus,
@@ -16,12 +15,14 @@ import Button from "../../components/ui/Button/Button";
 import TextArea from "../../components/ui/TextArea/TextArea";
 import RadioGroup, { RadioGroupItem } from "../../components/ui/RadioGroup/RadioGroup";
 import mockUserStore, { type Project } from "../../data/mockUser";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Projects() {
   const location = useLocation();
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeTab, setActiveTab] = useState<"all" | "planning" | "active" | "completed" | "paused">("all");
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const navigate = useNavigate();
   const [newProject, setNewProject] = useState({
     name: "",
     description: "",
@@ -122,11 +123,10 @@ export default function Projects() {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`pb-3 text-sm font-semibold border-b-2 transition capitalize cursor-pointer ${
-              activeTab === tab
-                ? "border-blue-600 text-blue-600 dark:border-blue-500 dark:text-blue-500"
-                : "border-transparent text-gray-500 hover:text-gray-950 dark:hover:text-white"
-            }`}
+            className={`pb-3 text-sm font-semibold border-b-2 transition capitalize cursor-pointer ${activeTab === tab
+              ? "border-blue-600 text-blue-600 dark:border-blue-500 dark:text-blue-500"
+              : "border-transparent text-gray-500 hover:text-gray-950 dark:hover:text-white"
+              }`}
           >
             {tab}
           </button>
@@ -137,7 +137,11 @@ export default function Projects() {
       {filteredProjects.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((p) => (
-            <Card key={p.id} className="flex flex-col h-full">
+            <Card
+              key={p.id}
+              className="flex flex-col h-full cursor-pointer hover:shadow-lg transition"
+              onClick={() => navigate(`/projects/${p.id}`)}
+            >
               <CardHeader className="pb-3 flex-row justify-between items-start gap-4">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 flex items-center justify-center shrink-0">
@@ -148,13 +152,12 @@ export default function Projects() {
                       {p.name}
                     </CardTitle>
                     <span
-                      className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider block w-max mt-1 ${
-                        p.priority === "high"
-                          ? "bg-red-50 text-red-700 dark:bg-red-950/20 dark:text-red-400"
-                          : p.priority === "medium"
+                      className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider block w-max mt-1 ${p.priority === "high"
+                        ? "bg-red-50 text-red-700 dark:bg-red-950/20 dark:text-red-400"
+                        : p.priority === "medium"
                           ? "bg-blue-50 text-blue-700 dark:bg-blue-950/20 dark:text-blue-400"
                           : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
-                      }`}
+                        }`}
                     >
                       {p.priority} Priority
                     </span>
@@ -164,7 +167,10 @@ export default function Projects() {
                 <div className="flex items-center gap-1 shrink-0">
                   {p.status !== "completed" && (
                     <button
-                      onClick={() => handleUpdateStatus(p.id, "completed")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUpdateStatus(p.id, "completed");
+                      }}
                       title="Mark Completed"
                       className="p-1 rounded text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 transition cursor-pointer"
                     >
@@ -173,7 +179,10 @@ export default function Projects() {
                   )}
                   {p.status === "active" ? (
                     <button
-                      onClick={() => handleUpdateStatus(p.id, "paused")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUpdateStatus(p.id, "paused");
+                      }}
                       title="Pause Project"
                       className="p-1 rounded text-gray-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/20 transition cursor-pointer"
                     >
@@ -181,7 +190,10 @@ export default function Projects() {
                     </button>
                   ) : p.status === "paused" || p.status === "planning" ? (
                     <button
-                      onClick={() => handleUpdateStatus(p.id, "active")}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUpdateStatus(p.id, "active");
+                      }}
                       title="Activate Project"
                       className="p-1 rounded text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition cursor-pointer"
                     >
@@ -189,11 +201,13 @@ export default function Projects() {
                     </button>
                   ) : null}
                   <button
-                    onClick={() => handleDeleteProject(p.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteProject(p.id);
+                    }}
                     title="Delete Project"
-                    className="p-1 rounded text-gray-400 hover:text-red-650 hover:bg-red-50 dark:hover:bg-red-950/20 transition cursor-pointer"
                   >
-                    <Trash2 className="w-4.5 h-4.5" />
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </CardHeader>
@@ -227,15 +241,14 @@ export default function Projects() {
                       <span>Due {p.dueDate}</span>
                     </div>
                     <span
-                      className={`font-semibold px-2 py-0.5 rounded text-[10px] uppercase ${
-                        p.status === "active"
-                          ? "bg-blue-50 text-blue-650 dark:bg-blue-950/20 dark:text-blue-400"
-                          : p.status === "completed"
+                      className={`font-semibold px-2 py-0.5 rounded text-[10px] uppercase ${p.status === "active"
+                        ? "bg-blue-50 text-blue-650 dark:bg-blue-950/20 dark:text-blue-400"
+                        : p.status === "completed"
                           ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400"
                           : p.status === "paused"
-                          ? "bg-amber-50 text-amber-600 dark:bg-amber-955/20 dark:text-amber-400"
-                          : "bg-purple-50 text-purple-600 dark:bg-purple-955/20 dark:text-purple-400"
-                      }`}
+                            ? "bg-amber-50 text-amber-600 dark:bg-amber-955/20 dark:text-amber-400"
+                            : "bg-purple-50 text-purple-600 dark:bg-purple-955/20 dark:text-purple-400"
+                        }`}
                     >
                       {p.status}
                     </span>

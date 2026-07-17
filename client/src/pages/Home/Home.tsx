@@ -8,12 +8,11 @@ import {
   ArrowRight,
   Shield,
   Zap,
-  Star,
   Grid
 } from "lucide-react";
 
 export default function Home() {
-  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly");
+  // const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly");
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const features = [
@@ -55,55 +54,55 @@ export default function Home() {
     }
   ];
 
-  const pricingPlans = [
-    {
-      name: "Starter Lab",
-      price: billingPeriod === "monthly" ? "0" : "0",
-      period: "forever",
-      desc: "Ideal for individual developers, testing setups, and personal experiment scratchpads.",
-      features: [
-        "1 active workspace",
-        "Up to 3 active projects",
-        "Classic Kanban task board",
-        "Local data persistency",
-        "Slack integration support"
-      ],
-      cta: "Get Started Free",
-      popular: false
-    },
-    {
-      name: "Pro Team",
-      price: billingPeriod === "monthly" ? "12" : "9",
-      period: "per user/month",
-      desc: "Perfect for scaling startups, engineering organizations, and collaborative teams.",
-      features: [
-        "Unlimited workspaces",
-        "Unlimited parallel projects",
-        "Stateful Kanban & grid tasks",
-        "All integration connectors",
-        "Prioritized support access",
-        "Advanced workspace stats dashboard"
-      ],
-      cta: "Start Pro Trial",
-      popular: true
-    },
-    {
-      name: "Enterprise Core",
-      price: "Custom",
-      period: "tailored contact",
-      desc: "Built for regulated enterprises requiring custom limits, audits, and dedicated hosting.",
-      features: [
-        "SLA guarantees",
-        "Dedicated workspace containers",
-        "SOC2 security compliance logs",
-        "Custom billing models",
-        "Account manager mapping",
-        "Whiteglove setup services"
-      ],
-      cta: "Contact Enterprise Sales",
-      popular: false
-    }
-  ];
+  // const pricingPlans = [
+  //   {
+  //     name: "Starter Lab",
+  //     price: billingPeriod === "monthly" ? "0" : "0",
+  //     period: "forever",
+  //     desc: "Ideal for individual developers, testing setups, and personal experiment scratchpads.",
+  //     features: [
+  //       "1 active workspace",
+  //       "Up to 3 active projects",
+  //       "Classic Kanban task board",
+  //       "Local data persistency",
+  //       "Slack integration support"
+  //     ],
+  //     cta: "Get Started Free",
+  //     popular: false
+  //   },
+  //   {
+  //     name: "Pro Team",
+  //     price: billingPeriod === "monthly" ? "12" : "9",
+  //     period: "per user/month",
+  //     desc: "Perfect for scaling startups, engineering organizations, and collaborative teams.",
+  //     features: [
+  //       "Unlimited workspaces",
+  //       "Unlimited parallel projects",
+  //       "Stateful Kanban & grid tasks",
+  //       "All integration connectors",
+  //       "Prioritized support access",
+  //       "Advanced workspace stats dashboard"
+  //     ],
+  //     cta: "Start Pro Trial",
+  //     popular: true
+  //   },
+  //   {
+  //     name: "Enterprise Core",
+  //     price: "Custom",
+  //     period: "tailored contact",
+  //     desc: "Built for regulated enterprises requiring custom limits, audits, and dedicated hosting.",
+  //     features: [
+  //       "SLA guarantees",
+  //       "Dedicated workspace containers",
+  //       "SOC2 security compliance logs",
+  //       "Custom billing models",
+  //       "Account manager mapping",
+  //       "Whiteglove setup services"
+  //     ],
+  //     cta: "Contact Enterprise Sales",
+  //     popular: false
+  //   }
+  // ];
 
   const faqs = [
     {
